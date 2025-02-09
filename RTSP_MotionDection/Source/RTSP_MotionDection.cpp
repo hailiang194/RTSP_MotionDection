@@ -11,6 +11,7 @@
 
 #include <opencv2/opencv.hpp>
 #include "MotionDetection/MotionDetection.h"
+#include "MotionRecorder/MotionRecorder.h"
 
 //======================================================================================================================
 /// A simple assertion function + macro
@@ -111,6 +112,7 @@ void codeThreadBus(GstElement* pipeline, GoblinData& data, const std::string& pr
 void codeThreadProcessV(GoblinData& data) {
     using namespace std;
     static MotionDetection detection;
+    static MotionRecorder recorder;
     for (;;) {
         // Exit on EOS
         if (gst_app_sink_is_eos(GST_APP_SINK(data.sinkVideo))) {
@@ -132,7 +134,7 @@ void codeThreadProcessV(GoblinData& data) {
         int imW, imH;
         MY_ASSERT(gst_structure_get_int(s, "width", &imW));
         MY_ASSERT(gst_structure_get_int(s, "height", &imH));
-        //cout << "Sample: W = " << imW << ", H = " << imH << endl;
+        cout << "Sample: W = " << imW << ", H = " << imH << endl;
 
         //        cout << "sample !" << endl;
                 // Process the sample
@@ -154,6 +156,20 @@ void codeThreadProcessV(GoblinData& data) {
             if (detection.MotionDetected())
             {
                 cout << "Motion detected" << endl;
+                if (!recorder.IsRecording())
+                {
+                    if(!recorder.Start())
+                        cout << "Failed to start recording motion" << endl;
+                }
+
+                if (!recorder.Write(frame))
+                {
+                    cout << "Failed to write the frame" << std::endl;
+                }
+            }
+            else
+            {
+                recorder.Stop();
             }
         }
         
