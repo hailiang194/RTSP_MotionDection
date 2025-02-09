@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <thread>
+#include <chrono>
+#include <strstream>
 
 #include <gst/gst.h>
 #include <gst/app/gstappsink.h>
@@ -152,13 +154,16 @@ void codeThreadProcessV(GoblinData& data) {
         cv::Mat frame(imH, imW, CV_8UC3, (void*)m.data);
         if (!frame.empty())
         {
+            int i = 0;
             detection.UpdateFrame(frame);
             if (detection.MotionDetected())
             {
                 cout << "Motion detected" << endl;
                 if (!recorder.IsRecording())
                 {
-                    if(!recorder.Start())
+                    strstream filenameStream;
+                    filenameStream << "Output/MotionDetection" << (i++) << ".mp4";
+                    if(!recorder.Start(filenameStream.str(), frame.size()))
                         cout << "Failed to start recording motion" << endl;
                 }
 

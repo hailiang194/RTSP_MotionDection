@@ -11,7 +11,7 @@ public:
 	MotionRecorder& operator=(const MotionRecorder& recorder) = delete;
 	~MotionRecorder();
 
-	bool Start();
+	bool Start(const cv::String& filename, const cv::Size& frameSize);
 	void Stop();
 	const bool& IsRecording() const;
 	const bool& IsRecording();
