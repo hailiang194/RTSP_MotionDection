@@ -10,6 +10,7 @@
 
 
 #include <opencv2/opencv.hpp>
+#include "MotionDetection/MotionDetection.h"
 
 //======================================================================================================================
 /// A simple assertion function + macro
@@ -109,6 +110,7 @@ void codeThreadBus(GstElement* pipeline, GoblinData& data, const std::string& pr
 /// Appsink process thread
 void codeThreadProcessV(GoblinData& data) {
     using namespace std;
+    static MotionDetection detection;
     for (;;) {
         // Exit on EOS
         if (gst_app_sink_is_eos(GST_APP_SINK(data.sinkVideo))) {
@@ -130,7 +132,7 @@ void codeThreadProcessV(GoblinData& data) {
         int imW, imH;
         MY_ASSERT(gst_structure_get_int(s, "width", &imW));
         MY_ASSERT(gst_structure_get_int(s, "height", &imH));
-        cout << "Sample: W = " << imW << ", H = " << imH << endl;
+        //cout << "Sample: W = " << imW << ", H = " << imH << endl;
 
         //        cout << "sample !" << endl;
                 // Process the sample
@@ -146,6 +148,15 @@ void codeThreadProcessV(GoblinData& data) {
 
                 // Wrap the raw data in OpenCV frame and show on screen
         cv::Mat frame(imH, imW, CV_8UC3, (void*)m.data);
+        if (!frame.empty())
+        {
+            detection.UpdateFrame(frame);
+            if (detection.MotionDetected())
+            {
+                cout << "Motion detected" << endl;
+            }
+        }
+        
         cv::imshow("frame", frame);
         int key = cv::waitKey(1);
 
