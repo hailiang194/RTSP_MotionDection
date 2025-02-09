@@ -12,6 +12,7 @@ public:
 	~MotionDetection();
 
 	void UpdateFrame(const cv::Mat& currentImage);
+	const bool& MotionDetected() const;
 	const bool& MotionDetected();
 
 private:
@@ -21,6 +22,7 @@ private:
 	bool m_motionDetected;
 
 	void PreprocessImage();
+	bool HasDifferent();
 };
 
 #endif //!_RTSP_MOTION_DETECTION_MOTION_DETECTION_H_

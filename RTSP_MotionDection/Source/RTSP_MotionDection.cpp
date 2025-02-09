@@ -148,11 +148,15 @@ void codeThreadProcessV(GoblinData& data) {
 
                 // Wrap the raw data in OpenCV frame and show on screen
         cv::Mat frame(imH, imW, CV_8UC3, (void*)m.data);
-        detection.UpdateFrame(frame);
-        if (detection.MotionDetected())
+        if (!frame.empty())
         {
-            cout << "Motion detected" << endl;
+            detection.UpdateFrame(frame);
+            if (detection.MotionDetected())
+            {
+                cout << "Motion detected" << endl;
+            }
         }
+        
         cv::imshow("frame", frame);
         int key = cv::waitKey(1);
 
