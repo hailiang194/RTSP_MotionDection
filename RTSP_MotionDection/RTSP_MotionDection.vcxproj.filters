@@ -21,9 +21,21 @@
     <ClCompile Include="Source\MotionDetection\MotionDetection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GStreamerWrapper\GStreamerWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MotionRecorder\MotionRecorder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\MotionDetection\MotionDetection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GStreamerWrapper\GStreamerWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MotionRecorder\MotionRecorder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
