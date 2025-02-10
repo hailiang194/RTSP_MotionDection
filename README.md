@@ -17,6 +17,13 @@ Via RTPS, detect and record the motion
 
 Build the project with configuration mode is Release with x64
 
+## Execution
+```
+RTSP_MotionDection.exe <GStreamer pipelines before default appsink plugin>
+```
+
+**Note**: The actual GStreamer pipeline is going to be ```<GStreamer pipelines before default appsink plugin>  ! appsink name=mysink max-buffers=2 sync=1 caps=video/x-raw,format=BGR```. All the motion detection videos are stored in Output\ directory
+
 ## Getting help
 
 If you have questions, concerns, bug reports, etc, please file an issue in this repository's Issue Tracker.
