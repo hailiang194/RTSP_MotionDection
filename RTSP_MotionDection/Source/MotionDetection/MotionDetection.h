@@ -17,8 +17,8 @@ public:
 
 private:
 	cv::Mat m_currentImage;
-	cv::Mat m_previousImage;
 	cv::Mat m_preprocessImage;
+	cv::Ptr<cv::BackgroundSubtractor> m_bgSub;
 	bool m_motionDetected;
 
 	void PreprocessImage();

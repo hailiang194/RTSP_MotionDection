@@ -2,12 +2,12 @@
 #include "MotionDetection.h"
 
 MotionDetection::MotionDetection()
-	:m_currentImage(), m_preprocessImage(), m_previousImage(), m_motionDetected(false)
+	:m_currentImage(), m_preprocessImage(),m_motionDetected(false), m_bgSub(cv::createBackgroundSubtractorMOG2())
 {
 }
 
 MotionDetection::MotionDetection(const MotionDetection& detection)
-	:m_currentImage(detection.m_currentImage), m_preprocessImage(detection.m_preprocessImage), m_previousImage(detection.m_previousImage), m_motionDetected(detection.m_motionDetected)
+	:m_currentImage(detection.m_currentImage), m_preprocessImage(detection.m_preprocessImage), m_motionDetected(detection.m_motionDetected), m_bgSub(detection.m_bgSub)
 {
 }
 
@@ -15,8 +15,8 @@ MotionDetection& MotionDetection::operator=(const MotionDetection& detection)
 {
 	m_currentImage = detection.m_currentImage;
 	m_preprocessImage = detection.m_preprocessImage;
-	m_previousImage = detection.m_previousImage;
 	m_motionDetected = detection.m_motionDetected;
+	m_bgSub = detection.m_bgSub;
 	return (*this);
 }
 
@@ -28,8 +28,7 @@ void MotionDetection::UpdateFrame(const cv::Mat& currentImage)
 {
 	m_currentImage = currentImage;
 	PreprocessImage();
-	m_motionDetected = !m_previousImage.empty() && HasDifferent();
-	m_previousImage = m_preprocessImage;
+	m_motionDetected = HasDifferent();
 }
 
 const bool& MotionDetection::MotionDetected() const
@@ -58,7 +57,8 @@ void MotionDetection::PreprocessImage()
 bool MotionDetection::HasDifferent()
 {
 	cv::Mat diff;
-	cv::absdiff(m_preprocessImage, m_previousImage, diff);
+	m_bgSub->apply(m_preprocessImage, diff);
+	cv::imshow("diff", diff);
 	cv::Mat threadhold;
 	cv::threshold(diff, threadhold, 25, 255, cv::THRESH_BINARY);
 	cv::Mat dilation;

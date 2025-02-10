@@ -113,9 +113,9 @@ void codeThreadBus(GstElement* pipeline, GoblinData& data, const std::string& pr
 /// Appsink process thread
 void codeThreadProcessV(GoblinData& data) {
     using namespace std;
-    static MotionDetection detection;
-    static MotionRecorder recorder;
-    static int i = 0;
+    MotionDetection detection;
+    MotionRecorder recorder;
+    int i = 0;
     for (;;) {
         // Exit on EOS
         if (gst_app_sink_is_eos(GST_APP_SINK(data.sinkVideo))) {
@@ -139,25 +139,11 @@ void codeThreadProcessV(GoblinData& data) {
         MY_ASSERT(gst_structure_get_int(s, "width", &imW));
         MY_ASSERT(gst_structure_get_int(s, "height", &imH));
         cout << "Sample: W = " << imW << ", H = " << imH << endl;
-        //        cout << "sample !" << endl;
-                // Process the sample
-                // "buffer" and "map" are used to access raw data in the sample
-                // "buffer" is a single data chunk, for raw video it's 1 frame
-                // "buffer" is NOT a queue !
-                // "Map" is the helper to access raw data in the buffer
         GstBuffer* buffer = gst_sample_get_buffer(sample);
         GstMapInfo m;
         MY_ASSERT(gst_buffer_map(buffer, &m, GST_MAP_READ));
         MY_ASSERT(m.size == imW * imH * 3);
-        //        cout << "size = " << map.size << " ==? " << imW*imH*3 << endl;
-
-                // Wrap the raw data in OpenCV frame and show on screen
         cv::Mat frame(imH, imW, CV_8UC3, (void*)m.data);
-        /*if (!recorder.IsRecording())
-        {
-            recorder.Start("Output/Test.mp4", frame.size());
-        }
-        recorder.Write(frame);*/
         if (!frame.empty())
         {
             
@@ -207,7 +193,7 @@ int main(int argc, char** argv) {
         cout << "Usage:\nvideo1 <video_file>" << endl;
         return 0;
     }*/
-    string fileName("Samples/Sample002.mp4");//(argv[1]);
+    string fileName("Samples/Sample003.mp4");//(argv[1]);
     cout << "Playing file : " << fileName << endl;
 
     // Our global data
