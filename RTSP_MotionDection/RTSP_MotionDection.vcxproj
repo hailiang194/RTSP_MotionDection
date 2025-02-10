@@ -129,7 +129,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>C:\gstreamer\1.0\msvc_x86_64\lib\glib-2.0\include;C:\gstreamer\1.0\msvc_x86_64\include\gstreamer-1.0;C:\gstreamer\1.0\msvc_x86_64\include\glib-2.0\;C:\gstreamer\1.0\msvc_x86_64\include\glib-2.0\glib;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\gstreamer\1.0\msvc_x86_64\lib\glib-2.0\include;C:\gstreamer\1.0\msvc_x86_64\include\gstreamer-1.0;C:\gstreamer\1.0\msvc_x86_64\include\glib-2.0\;C:\gstreamer\1.0\msvc_x86_64\include\glib-2.0\glib;$(ProjectDir)Source</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,11 +141,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\GStreamerWrapper\GStreamerWrapper.cpp" />
     <ClCompile Include="Source\MotionRecorder\MotionRecorder.cpp" />
     <ClCompile Include="Source\MotionDetection\MotionDetection.cpp" />
     <ClCompile Include="Source\RTSP_MotionDection.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\GStreamerWrapper\GStreamerWrapper.h" />
     <ClInclude Include="Source\MotionRecorder\MotionRecorder.h" />
     <ClInclude Include="Source\MotionDetection\MotionDetection.h" />
   </ItemGroup>
