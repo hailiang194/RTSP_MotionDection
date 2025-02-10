@@ -58,7 +58,6 @@ bool MotionDetection::HasDifferent()
 {
 	cv::Mat diff;
 	m_bgSub->apply(m_preprocessImage, diff);
-	cv::imshow("diff", diff);
 	cv::Mat threadhold;
 	cv::threshold(diff, threadhold, 25, 255, cv::THRESH_BINARY);
 	cv::Mat dilation;
