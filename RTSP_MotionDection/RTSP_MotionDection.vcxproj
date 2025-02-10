@@ -141,10 +141,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\MotionRecorder\MotionRecorder.cpp" />
     <ClCompile Include="Source\MotionDetection\MotionDetection.cpp" />
     <ClCompile Include="Source\RTSP_MotionDection.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\MotionRecorder\MotionRecorder.h" />
     <ClInclude Include="Source\MotionDetection\MotionDetection.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
